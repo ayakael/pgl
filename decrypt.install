@@ -1,0 +1,11 @@
+post_install() {
+
+   	echo "INSTALL INSTRUCTIONS"
+   	echo "1) Add 'decrypt' in /etc/mkinitcpio"
+   	echo "2) Execute 'mkinitcpio -p linux'"
+
+}
+
+post_upgrade() {
+	mkinitcpio -p linux
+}

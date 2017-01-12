@@ -1,0 +1,14 @@
+#
+# Author Antoine Martin
+# Copyright (c) 2016 Antoine Martin <antoine.martin@protonmail.com>
+# Release v0.5.1-4 decrypt
+#
+#!/usr/bin/ash
+run_hook() {
+    modprobe -a -q dm-crypt >/dev/null 2>&1
+    [ "${quiet}" = "y" ] && CSQUIET=">/dev/null"
+        export TERMINFO=/usr/lib/terminfo
+	bash /usr/bin/decrypt open
+
+}
+

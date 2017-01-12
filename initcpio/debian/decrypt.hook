@@ -1,0 +1,53 @@
+#!/bin/sh
+
+PREREQS="udev"
+EXEC="/usr/bin/bash /sbin/cryptsetup dmsetup mount egrep lsblk sed tput"
+RULES="55-dm.rules"
+FILES="'/usr/share/terminfo/l/linux-16color:/lib/terminfo/l/linux' '/usr/share/initramfs-tools/scripts/local-premount/decrypt.sh:/usr/bin/decrypt'"
+
+prereqs()
+{
+	echo "${PREREQ}"
+}
+
+case $1 in
+prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+
+for exec in ${EXEC}; do
+	if [ -e ${exec} ]; then
+		copy_exec "${exec}"
+	else
+		echo "${exec} not found"
+done
+
+mkdir -p ${DESTDIR}/lib/udev/rules.d/; do
+for rules in ${RULES}; do
+	if [ -e /etc/udev/rules.d/${rules} ]; then
+		cp -p "/etc/udev/rules.d/${rules}" "${DESTDIR}/etc/udev/rules.d/"
+	elif [ -e /lib/udev/rules.d/${rules} ]; then
+		cp -p "/lib/udev/rules.d/${rules}"  "${DESTDIR}/lib/udev/rules.d/"
+	else
+		echo "${rules} not found"
+	fi
+done
+
+for files in ${FILES}; do
+	FILES_SRC=$(echo ${files} | sed 's/.*://')
+	FILES_DST=$(echo ${files} | sed 's/:.*//')
+	FILES_NAME=$(echo ${files} | sed 's|.*/||')
+	mkdir -p ${DESTDIR}/${FILES_NAME}
+	if [ -e ${FILES_SRC} ]; then
+		cp -p "${FILES_SRC}" "${DESTDIR}/{FILES_DST}"
+	else
+		echo "${FILES_SRC} not found"
+done
+	
+
+exit 0
