@@ -1,34 +1,35 @@
 pkgname=decrypt
-pkgver=0.5.1
-pkgrel=4
+pkgver=0.5.2
+pkgrel=1
 pkgdesc="Decryption script"
 arch=('any')
-license=('MIT')
+license=('AGPL3')
 depends=('cryptsetup')
-changelog=changelog
+changelog=CHANGELOG
 install=decrypt.install
 source=(
-'binaries/decrypt.sh'
-'initcpio/archlinux/decrypt.hook'
-'initcpio/archlinux/decrypt.install'
+	'${pkgname}::git+ssh://git@git.groulx.tech/decrypt#branch=master'
+	'decrypt-hook.hook'
+	'decrypt-hook.install'
 )
+
+sha256sums=(
+	'SKIP'
+	'5e68d897247952ac786c0032f94b4ecd5c6903316820a37c38092c8fc2087863'
+	'fc9aa12e7a4d9cc6ef51c149d0c045300f2bcd92c11a949be17208f2748ce24a'
+)
+
+
+prepare() {
+	cd ${srcdir}/${pkgname}
+	git checkout ${pkgver}
+}
 
 package() {
 
   	# Install last known script with service
- 	install -Dm 755 "${srcdir}/decrypt.hook" "${pkgdir}/usr/lib/initcpio/hooks/decrypt"
   	install -Dm 755 "${srcdir}/decrypt.sh" "${pkgdir}/usr/lib/initcpio/hooks/decrypt.sh"
-  	install -Dm 755 "${srcdir}/decrypt.install" "${pkgdir}/usr/lib/initcpio/install/decrypt"
-
-  	# Add copywrite header to all files
-	for i in $(find ${pkgdir}/* -type f -not -name ".PKGINFO" -not -name ".BUILDINFO" -not -name ".MTREE"); do
-  		echo "#
-# Author Antoine Martin
-# Copyright (c) $(date +%Y) Antoine Martin <antoine.martin@protonmail.com>
-# Release v${pkgver}-${pkgrel} ${pkgname}
-#
-$(cat "${i}")
-" > ${i}
-	done
+  	install -Dm 755 "${srcdir}/decrypt-hook.install" "${pkgdir}/usr/lib/initcpio/install/decrypt"
+ 	install -Dm 755 "${srcdir}/decrypt-hook.hook" "${pkgdir}/usr/lib/initcpio/hooks/decrypt"
 }
 

@@ -12,3 +12,6 @@ Adds password function for systems with no keedrive
 
 v0.5.1
 Fixes bug in help parser
+
+v0.5.2
+Changed license from MIT to AGPL3
