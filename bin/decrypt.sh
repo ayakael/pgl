@@ -1,6 +1,13 @@
-#!/usr/bin/ash
+#!/usr/bin/bash
+#
+# Author Ayakael (Antoine Martin)
+# Copyright (c) 2016-2017 Antoine Martin <antoine.martin@protonmail.com>
+# Distributed under the GNU Affero General Public License (AGPL v3)
+# See LICENSE or http://www.gnu.org/licenses/agpl.html
+#
+
 # Global variables
-VERSION="0.5"
+VERSION="0.5.2"
 STDERR=$(mktemp /tmp/STDERR.XXXXXXXXXX)
 INDENT=0
 WARN=false
@@ -183,9 +190,12 @@ Add a keydrive to the drive array
 		# Help for decrypt --info
 		info)
 			echo -e "\033[1A
-Decrypt v${VERSION} written under the MIT license (see license) by Antoine Martin.
+Decrypt v${VERSION}
+Copyright (c) 2016-2017 Antoine Martin <antoine.martin@protonmail.com>
+
+Distributed under the GNU Affero General Public License (AGPL v3)
+See LICENSE or http://www.gnu.org/licenses/agpl.html
 "
-			exit
 		;;
 	
 		# Help for decrypt --help
