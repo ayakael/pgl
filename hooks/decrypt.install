@@ -16,4 +16,4 @@ prereqs)
 	;;
 esac
 
-/sbin/bash "/usr/bin/decrypt open"
+/bin/bash decrypt open
