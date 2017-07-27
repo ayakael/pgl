@@ -8,7 +8,7 @@ depends=('cryptsetup')
 changelog=CHANGELOG
 install=decrypt.install
 source=(
-	'${pkgname}::git+ssh://git@git.groulx.tech/decrypt#branch=master'
+	'${pkgname}::git+ssh://git@git.awanderinglog.com/decrypt#branch=master'
 	'decrypt-hook.hook'
 	'decrypt-hook.install'
 )
